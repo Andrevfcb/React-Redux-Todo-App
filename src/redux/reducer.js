@@ -14,7 +14,15 @@ const addTodoReducer = createSlice({
     },
     //remove todos
     removeTodos: (state, action) => {
-      return state.filter((item) => item.id !== action.payload);
+      return state.map((todo) => {
+        if(todo.id === action.payload.id) {
+          return {
+            ...todo,
+            deleted: true
+          };
+        }
+        return todo;
+      });
     },
     //update todos
     updateTodos: (state, action) => {

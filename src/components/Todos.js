@@ -22,6 +22,7 @@ const Todos = (props) => {
         id: Math.floor(Math.random() * 1000),
         item: todo,
         completed: false,
+        deleted: false
       }))
       setTodo("");
     }

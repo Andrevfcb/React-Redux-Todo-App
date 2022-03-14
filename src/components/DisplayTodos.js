@@ -34,6 +34,13 @@ const DisplayTodos = (props) => {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={() => setSort("deleted")}
+        >
+          Deleted
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => setSort("all")}
         >
           All
@@ -44,11 +51,11 @@ const DisplayTodos = (props) => {
           {state.length > 0 && sort === "active"
             ? state.map((item) => {
                 return (
-                  item.completed === false && (
+                  item.completed === false && item.deleted === false && (
                     <TodoItem
                       key={item.id}
                       item={item}
-                      removeTodo={(id) => dispatch(removeTodos(id))}
+                      removeTodo={(obj) => dispatch(removeTodos(obj))}
                       updateTodo={(obj) => dispatch(updateTodos(obj))}
                       completeTodo={(id) => dispatch(completeTodos(id))}
                     />
@@ -60,11 +67,11 @@ const DisplayTodos = (props) => {
           {state.length > 0 && sort === "completed"
             ? state.map((item) => {
                 return (
-                  item.completed === true && (
+                  item.completed === true && item.deleted === false && (
                     <TodoItem
                       key={item.id}
                       item={item}
-                      removeTodo={(id) => dispatch(removeTodos(id))}
+                      removeTodo={(obj) => dispatch(removeTodos(obj))}
                       updateTodo={(obj) => dispatch(updateTodos(obj))}
                       completeTodo={(id) => dispatch(completeTodos(id))}
                     />
@@ -72,20 +79,36 @@ const DisplayTodos = (props) => {
                 );
               })
             : null}
+          {/* for deleted items */}
+          {state.length > 0 && sort === "deleted"
+            ? state.map((item) => {
+                return (
+                  item.deleted === true && (
+                    <TodoItem
+                    key={item.id}
+                    item={item}
+                    removeTodo={(obj) => dispatch(removeTodos(obj))}
+                    updateTodo={(obj) => dispatch(updateTodos(obj))}
+                    completeTodo={(id) => dispatch(completeTodos(id))}
+                  />)
+                );
+              })
+            : null}
           {/* for all items */}
           {state.length > 0 && sort === "all"
             ? state.map((item) => {
                 return (
-                  <TodoItem
+                <TodoItem
                     key={item.id}
                     item={item}
-                    removeTodo={(id) => dispatch(removeTodos(id))}
+                    removeTodo={(obj) => dispatch(removeTodos(obj))}
                     updateTodo={(obj) => dispatch(updateTodos(obj))}
                     completeTodo={(id) => dispatch(completeTodos(id))}
                   />
                 );
               })
             : null}
+          
         </AnimatePresence>
       </ul>
     </div>

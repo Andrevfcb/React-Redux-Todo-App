@@ -43,7 +43,7 @@ const TodoItem = (props) => {
         defaultValue={item.item}
         onKeyPress={(e) => update(item.id, inputRef.current.value, e)}
       />
-      <div className="btns">
+      {!item.deleted && <div className="btns">
         <motion.button
           whileHover={{ scale: 1.4 }}
           whileTap={{ scale: 0.9 }}
@@ -66,13 +66,14 @@ const TodoItem = (props) => {
           whileHover={{ scale: 1.4 }}
           whileTap={{ scale: 0.9 }}
           style={{ color: "red" }}
-          onClick={() => removeTodo(item.id)}
+          onClick={() => removeTodo(item)}
         >
           {" "}
           <IoClose />
         </motion.button>{" "}
-      </div>
-      {item.completed && <span className="completed">done</span>}
+      </div>}
+      {item.completed && !item.deleted &&<span className="completed">done</span>}
+      {item.deleted && <span className="deleted">deleted</span>}
     </motion.li>
   );
 };
