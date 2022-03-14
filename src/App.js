@@ -1,9 +1,27 @@
 import "./css/main.css";
 import DisplayTodos from "./components/DisplayTodos";
 import Todos from "./components/Todos";
-
 import { motion } from "framer-motion";
+import React, { useEffect } from "react";
+import { setTodos } from "./redux/reducer";
+import { useDispatch, useSelector } from "react-redux";
 function App() {
+
+  const state = useSelector((state) => state)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const data = localStorage.getItem("todos");
+    if(data) {
+      dispatch(setTodos(JSON.parse(data)))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(state))
+  })
+  
+
   return (
     <div className="App">
       <motion.h1

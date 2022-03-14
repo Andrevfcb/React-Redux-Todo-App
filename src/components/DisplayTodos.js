@@ -1,30 +1,19 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  addTodos,
   completeTodos,
   removeTodos,
   updateTodos,
+  restoreTodos
 } from "../redux/reducer";
 import TodoItem from "./TodoItem";
 import { AnimatePresence, motion } from "framer-motion";
 
-const mapStateToProps = (state) => {
-  return {
-    todos: state,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addTodo: (obj) => dispatch(addTodos(obj)),
-    removeTodo: (id) => dispatch(removeTodos(id)),
-    updateTodo: (obj) => dispatch(updateTodos(obj)),
-    completeTodo: (id) => dispatch(completeTodos(id)),
-  };
-};
-
 const DisplayTodos = (props) => {
+
+  const state = useSelector((state) => state)
+  const dispatch = useDispatch()
+
   const [sort, setSort] = useState("active");
   return (
     <div className="displaytodos">
@@ -46,6 +35,13 @@ const DisplayTodos = (props) => {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={() => setSort("deleted")}
+        >
+          Deleted
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => setSort("all")}
         >
           All
@@ -53,55 +49,75 @@ const DisplayTodos = (props) => {
       </div>
       <ul>
         <AnimatePresence>
-          {props.todos.length > 0 && sort === "active"
-            ? props.todos.map((item) => {
+          {state.length > 0 && sort === "active"
+            ? state.map((item) => {
                 return (
-                  item.completed === false && (
+                  item.completed === false && item.deleted === false && (
                     <TodoItem
                       key={item.id}
                       item={item}
-                      removeTodo={props.removeTodo}
-                      updateTodo={props.updateTodo}
-                      completeTodo={props.completeTodo}
+                      removeTodo={(obj) => dispatch(removeTodos(obj))}
+                      updateTodo={(obj) => dispatch(updateTodos(obj))}
+                      completeTodo={(id) => dispatch(completeTodos(id))}
+                      restoreTodo={(obj) => dispatch(restoreTodos(obj))}
                     />
                   )
                 );
               })
             : null}
           {/* for completed items */}
-          {props.todos.length > 0 && sort === "completed"
-            ? props.todos.map((item) => {
+          {state.length > 0 && sort === "completed"
+            ? state.map((item) => {
                 return (
-                  item.completed === true && (
+                  item.completed === true && item.deleted === false && (
                     <TodoItem
                       key={item.id}
                       item={item}
-                      removeTodo={props.removeTodo}
-                      updateTodo={props.updateTodo}
-                      completeTodo={props.completeTodo}
+                      removeTodo={(obj) => dispatch(removeTodos(obj))}
+                      updateTodo={(obj) => dispatch(updateTodos(obj))}
+                      completeTodo={(id) => dispatch(completeTodos(id))}
+                      restoreTodo={(obj) => dispatch(restoreTodos(obj))}
                     />
                   )
                 );
               })
             : null}
-          {/* for all items */}
-          {props.todos.length > 0 && sort === "all"
-            ? props.todos.map((item) => {
+          {/* for deleted items */}
+          {state.length > 0 && sort === "deleted"
+            ? state.map((item) => {
                 return (
-                  <TodoItem
+                  item.deleted === true && (
+                    <TodoItem
                     key={item.id}
                     item={item}
-                    removeTodo={props.removeTodo}
-                    updateTodo={props.updateTodo}
-                    completeTodo={props.completeTodo}
+                    removeTodo={(obj) => dispatch(removeTodos(obj))}
+                    updateTodo={(obj) => dispatch(updateTodos(obj))}
+                    completeTodo={(id) => dispatch(completeTodos(id))}
+                    restoreTodo={(obj) => dispatch(restoreTodos(obj))}
+                  />)
+                );
+              })
+            : null}
+          {/* for all items */}
+          {state.length > 0 && sort === "all"
+            ? state.map((item) => {
+                return (
+                <TodoItem
+                    key={item.id}
+                    item={item}
+                    removeTodo={(obj) => dispatch(removeTodos(obj))}
+                    updateTodo={(obj) => dispatch(updateTodos(obj))}
+                    completeTodo={(id) => dispatch(completeTodos(id))}
+                    restoreTodo={(obj) => dispatch(restoreTodos(obj))}
                   />
                 );
               })
             : null}
+          
         </AnimatePresence>
       </ul>
     </div>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisplayTodos);
+export default DisplayTodos;

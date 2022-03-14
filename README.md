@@ -1,5 +1,7 @@
 # Build TODO App with Redux and React JS
 
+email: amajewski1994@gmail.com
+
 This repository contains code for Todo app with react-redux.
 
 View Demo:

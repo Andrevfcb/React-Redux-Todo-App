@@ -168,17 +168,25 @@ body {
   outline: none;
 }
 
-.completed {
+.completed,
+.deleted {
   position: absolute;
   right: 0.3rem;
   top: 0.3rem;
-  background-color: #867bcd;
   border: 2px solid #272727;
-  color: #e1ebfd;
-
   font-size: 0.8rem;
   padding: 0.3rem 1rem;
   border-radius: 20px;
+}
+
+.completed {
+  background-color: #867bcd;
+  color: #e1ebfd;
+}
+
+.deleted {
+  color: red;
+  background-color: black;
 }
 
 @media Screen and (max-width: 640px) {
