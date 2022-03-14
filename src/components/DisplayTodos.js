@@ -4,6 +4,7 @@ import {
   completeTodos,
   removeTodos,
   updateTodos,
+  restoreTodos
 } from "../redux/reducer";
 import TodoItem from "./TodoItem";
 import { AnimatePresence, motion } from "framer-motion";
@@ -58,6 +59,7 @@ const DisplayTodos = (props) => {
                       removeTodo={(obj) => dispatch(removeTodos(obj))}
                       updateTodo={(obj) => dispatch(updateTodos(obj))}
                       completeTodo={(id) => dispatch(completeTodos(id))}
+                      restoreTodo={(obj) => dispatch(restoreTodos(obj))}
                     />
                   )
                 );
@@ -74,6 +76,7 @@ const DisplayTodos = (props) => {
                       removeTodo={(obj) => dispatch(removeTodos(obj))}
                       updateTodo={(obj) => dispatch(updateTodos(obj))}
                       completeTodo={(id) => dispatch(completeTodos(id))}
+                      restoreTodo={(obj) => dispatch(restoreTodos(obj))}
                     />
                   )
                 );
@@ -90,6 +93,7 @@ const DisplayTodos = (props) => {
                     removeTodo={(obj) => dispatch(removeTodos(obj))}
                     updateTodo={(obj) => dispatch(updateTodos(obj))}
                     completeTodo={(id) => dispatch(completeTodos(id))}
+                    restoreTodo={(obj) => dispatch(restoreTodos(obj))}
                   />)
                 );
               })
@@ -104,6 +108,7 @@ const DisplayTodos = (props) => {
                     removeTodo={(obj) => dispatch(removeTodos(obj))}
                     updateTodo={(obj) => dispatch(updateTodos(obj))}
                     completeTodo={(id) => dispatch(completeTodos(id))}
+                    restoreTodo={(obj) => dispatch(restoreTodos(obj))}
                   />
                 );
               })

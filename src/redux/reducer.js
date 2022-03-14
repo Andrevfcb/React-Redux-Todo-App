@@ -48,6 +48,18 @@ const addTodoReducer = createSlice({
         return todo;
       });
     },
+    //restore
+    restoreTodos: (state, action) => {
+      return state.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            deleted: false,
+          };
+        }
+        return todo;
+      });
+    },
     //set todos
     setTodos: (state, action) => {
       return state = action.payload
@@ -60,6 +72,7 @@ export const {
   removeTodos,
   updateTodos,
   completeTodos,
+  restoreTodos,
   setTodos
 } = addTodoReducer.actions;
 export const reducer = addTodoReducer.reducer;
